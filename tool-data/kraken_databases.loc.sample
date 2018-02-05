@@ -1,0 +1,14 @@
+# This is a tab-separated file listing any Kraken databases
+# installed locally to offer via Galaxy.
+#
+# - Column 1 - value, the key which Galaxy will record in DB
+# - Column 2 - name, the text caption which Galaxy show users
+# - Column 3 - path, the directory name (which will contain
+#   files named ``database.idx``, ``database.kdb`` and a
+#   sub-directory named taxonomy containing files from the
+#   NCBI named ``names.dmp`` and ``nodes.dmp``
+#
+# e.g.
+#
+# plants_dec_2017(tab)Plants (December 2017)(tab)/mnt/shared/kraken_db/plants_2017_12/
+#
