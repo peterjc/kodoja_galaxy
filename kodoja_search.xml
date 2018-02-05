@@ -6,8 +6,9 @@
     <version_command>kodoja_search.py --version</version_command>
     <command detect_errors="exit_code"><![CDATA[
 kodoja_search.py
--d1 kraken_db
--d2 kaiju_db
+
+--kraken_db '${kraken_db.fields.path}'
+--kaiju_db '${kaiju_db.fields.path}'
 
 #if $single_paired.single_paired_selector == 'yes'
     #if $forward_input.is_of_type( 'fastq' ):
@@ -36,8 +37,16 @@ kodoja_search.py
 -o output_dir
     ]]></command>
     <inputs>
-        <param type="data" name="kraken_db" format="" />
-        <param type="data" name="kaiju_db" format="" />
+        <param label="Select a Kraken database" name="kraken_db" type="select">
+            <options from_data_table="kraken_databases">
+                <validator message="No Kraken database is available" type="no_options" />
+            </options>
+        </param>
+        <param label="Select a Kaiju database" name="kaiju_db" type="select">
+            <options from_data_table="kaiju_databases">
+                <validator message="No Kaiju database is available" type="no_options" />
+            </options>
+        </param>
         <conditional name="single_paired">
             <param name="single_paired_selector" type="select" label="Single or paired reads" help="--paired">
                 <!-- TODO?
