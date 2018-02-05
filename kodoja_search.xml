@@ -5,13 +5,56 @@
     </requirements>
     <version_command>kodoja_search.py --version</version_command>
     <command detect_errors="exit_code"><![CDATA[
-        kodoja_search.py -o output_dir -d1 kraken_db -d2 kaiju_db -r1 read1 -r2 read2 -f format -m min_trim -a trim_adapt -q kraken_quick -p kraken_preload -c kaiju_score -l kaiju_minlen -i kaiju_mismatch
+kodoja_search.py
+-d1 kraken_db
+-d2 kaiju_db
+
+#if $single_paired.single_paired_selector == 'yes'
+    #if $forward_input.is_of_type( 'fastq' ):
+        --format fastq
+    #else:
+        --format fasta
+    #end if
+    --read1 '${single_paired.forward_input}'
+    --read2 '${single_paired.reverse_input}'
+#else:
+    #if $single_paired.input_sequences.is_of_type('fastq')
+        --format fastq
+    #else:
+        --format fasta
+    #end if
+    --read1 '${single_paired.input_sequences}'
+#end if
+
+-m min_trim
+-a trim_adapt
+-q kraken_quick
+-p kraken_preload
+-c kaiju_score
+-l kaiju_minlen
+-i kaiju_mismatch
+-o output_dir
     ]]></command>
     <inputs>
         <param type="data" name="kraken_db" format="" />
         <param type="data" name="kaiju_db" format="" />
-        <param type="data" name="read1" format="" />
-        <param type="data" name="read2" format="" />
+        <conditional name="single_paired">
+            <param name="single_paired_selector" type="select" label="Single or paired reads" help="--paired">
+                <!-- TODO?
+                <option value="collection">Collection</option>
+		-->
+                <option value="yes">Paired</option>
+                <option selected="True" value="no">Single</option>
+            </param>
+            <when value="yes">
+                <param format="fasta,fastq" name="forward_input" type="data" label="Forward strand" help="FASTA or FASTQ dataset"/>
+                <param format="fasta,fastq" name="reverse_input" type="data" label="Reverse strand" help="FASTA or FASTQ dataset"/>
+            </when>
+            <when value="no">
+                <param format="fasta,fastq" label="Input sequences" name="input_sequences" type="data" help="FASTA or FASTQ datasets"/>
+            </when>
+
+        </conditional>
     </inputs>
     <outputs>
     </outputs>
