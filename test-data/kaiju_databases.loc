@@ -1,0 +1,14 @@
+# This is a tab-separated file listing any Kaiju databases
+# available local for tool wrapper tests.
+#
+# - Column 1 - value, the key which Galaxy will record in DB
+# - Column 2 - name, the text caption which Galaxy show users
+# - Column 3 - path, the directory name (which will contain
+#   files named ``kaiju_library.fmi``, ``names.dmp`` and
+#   ``nodes.dmp`` (the later being NCBI taxonomy files).
+#
+# e.g.
+#
+# plants_dec_2017(tab)Plants (December 2017)(tab)/mnt/shared/kaiju_db/plants_2017_12/
+#
+kaiju3viruses	Sample databse using k18 m5 and three viruses	${__HERE__}/kaijuDB_test
