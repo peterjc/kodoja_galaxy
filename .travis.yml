@@ -1,10 +1,21 @@
 # This is a special configuration file to run tests on Travis-CI via
 # GitHub notifications when changes are committed.
+#
+# For technical details, see http://travis-ci.org/ and this blog post
+# for background,
+# http://blastedbio.blogspot.com/2013/09/using-travis-ci-for-testing-galaxy-tools.html
 
 # Galaxy currently only supports Python 2.7
 language: python
-python: "2.7"
 cache: pip
+jobs:
+  include:
+    - stage: test
+      python: "2.7"
+      env: GALAXY_BRANCH=master
+    - stage: test
+      python: "2.7"
+      env: GALAXY_BRANCH=dev
 
 # Planemo Lint
 # ============
@@ -12,6 +23,16 @@ cache: pip
 # Planemo can be run to check tools separately from Galaxy, and this
 # is fast so we do it *before* the slow process of installing Galaxy
 # and running the tool tests.
+#
+# Installing Galaxy
+# =================
+#
+# We want to test with specific branches of Galaxy, so we install it.
+#
+# Installing Tool Dependencies
+# ============================
+#
+# Galaxy should handle this via conda.
 
 before_install:
  - "if grep -P '\t' *.rst; then echo 'Tabs are bad, please use four spaces in RST files.'; false; fi"
@@ -27,12 +48,53 @@ before_install:
  - pip install planemo
  - echo "Using planemo lint to check for obvious tool errors"
  - planemo shed_lint --tools --fail_level error --ensure_metadata -r ${TRAVIS_BUILD_DIR}
+ - echo "Fixing permissions on Python eggs cache folder"
+ - mkdir -p "$HOME/.python-eggs"
+ - chmod 700 "$HOME/.python-eggs"
+ # ==============================================
+ - "echo Fetching NCBI taxonomy"
+ - "cd test-data/taxonomy"
+ - "rm -rf *.dmp"
+ - "wget ftp://ftp.ncbi.nih.gov/pub/taxonomy/taxdump.tar.gz"
+ - "tar zxvf taxdump.tar.gz"
+ - "cd ../.."
+ # ==============================================
+ - echo "Fetching Galaxy ${GALAXY_BRANCH} branch..."
+ - cd ${HOME}
+ - wget https://codeload.github.com/galaxyproject/galaxy/tar.gz/${GALAXY_BRANCH}
+ - tar -zxvf ${GALAXY_BRANCH} | tail
+ - cd galaxy-${GALAXY_BRANCH}
+
+# Configuring tools within Galaxy
+# ===============================
+#
+# We don't have any special datatypes, and planemo should take care
+# of all the test files...
+#
+# Note https://github.com/galaxyproject/planemo/issues/530 workaround
 
 install:
- - echo "TODO - Setup Galaxy/Planemo testing framework"
+ - cd ${HOME}/galaxy-${GALAXY_BRANCH}
+ - export GALAXY_TEST_UPLOAD_ASYNC=false
+ - export GALAXY_TEST_DB_TEMPLATE=https://github.com/jmchilton/galaxy-downloads/raw/master/db_gx_rev_0127.sqlite
+ # Explicitly use sample files to generate default *.loc files
+ - for f in ${TRAVIS_BUILD_DIR}/tool-data/*.loc.sample; do cp "$f" "${f%.sample}"; done
+ # Then explicitly override them with any non-sample *.loc files
+ - cp ${TRAVIS_BUILD_DIR}/tool-data/*.loc ${HOME}/galaxy-${GALAXY_BRANCH}/tool-data/
+ # Then explicitly override them with any test *.loc files
+ - cp ${TRAVIS_BUILD_DIR}/test-data/*.loc ${HOME}/galaxy-${GALAXY_BRANCH}/tool-data/
+ - bash scripts/common_startup.sh --no-create-venv --dev-wheels
+
+
+# Testing tools in Galaxy
+# =======================
+#
+# Having setup our Galaxy, and tools, now just call planemo test.
 
 script:
- - echo "TODO - Run planemo test"
+ - cd ${TRAVIS_BUILD_DIR}
+ - planemo --version
+ - planemo test --galaxy_root ${HOME}/galaxy-${GALAXY_BRANCH} --skip_venv ${TRAVIS_BUILD_DIR}
 
 notifications:
   email: false
