@@ -68,45 +68,51 @@ kodoja_search.py
     <outputs>
     </outputs>
     <help><![CDATA[
-        usage: kodoja_search.py [-h] [--version] -o OUTPUT_DIR -d1 KRAKEN_DB -d2
-                        KAIJU_DB -r1 READ1 [-r2 READ2] [-f DATA_FORMAT]
-                        [-t THREADS] [-s] [-m TRIM_MINLEN] [-a TRIM_ADAPT]
-                        [-q KRAKEN_QUICK] [-p] [-c KAIJU_SCORE]
-                        [-l KAIJU_MINLEN] [-i KAIJU_MISMATCH]
+Kodoja is a tool intended to identify viral sequences in a
+FASTQ/FASTA sequencing run by matching them against both
+Kraken and Kaiju databases.
 
-Kodoja
+This is the command line tool's help::
 
-optional arguments:
-  -h, --help            show this help message and exit
-  --version             show program's version number and exit
-  -o OUTPUT_DIR, --output_dir OUTPUT_DIR
-                        Output directory path, required
-  -d1 KRAKEN_DB, --kraken_db KRAKEN_DB
-                        Kraken database path, required
-  -d2 KAIJU_DB, --kaiju_db KAIJU_DB
-                        Kaiju database path, required
-  -r1 READ1, --read1 READ1
-                        Read 1 file path, required
-  -r2 READ2, --read2 READ2
-                        Read 2 file path
-  -f DATA_FORMAT, --data_format DATA_FORMAT
-                        Sequence data format
-  -t THREADS, --threads THREADS
-                        Number of threads
-  -s, --host_subset     Subset host sequences before Kaiju
-  -m TRIM_MINLEN, --trim_minlen TRIM_MINLEN
-                        Trimmomatic minimum length
-  -a TRIM_ADAPT, --trim_adapt TRIM_ADAPT
-                        Illumina adapter sequence file
-  -q KRAKEN_QUICK, --kraken_quick KRAKEN_QUICK
-                        Number of minium hits by Kraken
-  -p, --kraken_preload  Kraken preload database
-  -c KAIJU_SCORE, --kaiju_score KAIJU_SCORE
-                        Kaju alignment score
-  -l KAIJU_MINLEN, --kaiju_minlen KAIJU_MINLEN
-                        Kaju minimum length
-  -i KAIJU_MISMATCH, --kaiju_mismatch KAIJU_MISMATCH
-                        Kaju allowed mismatches
+    usage: kodoja_search.py [-h] [--version] -o OUTPUT_DIR -d1 KRAKEN_DB -d2
+    KAIJU_DB -r1 READ1 [-r2 READ2] [-f DATA_FORMAT]
+    [-t THREADS] [-s] [-m TRIM_MINLEN] [-a TRIM_ADAPT]
+    [-q KRAKEN_QUICK] [-p] [-c KAIJU_SCORE]
+    [-l KAIJU_MINLEN] [-i KAIJU_MISMATCH]
+
+    Kodoja
+
+    optional arguments:
+      -h, --help            show this help message and exit
+      --version             show program's version number and exit
+      -o OUTPUT_DIR, --output_dir OUTPUT_DIR
+                            Output directory path, required
+      -d1 KRAKEN_DB, --kraken_db KRAKEN_DB
+                            Kraken database path, required
+      -d2 KAIJU_DB, --kaiju_db KAIJU_DB
+                            Kaiju database path, required
+      -r1 READ1, --read1 READ1
+                            Read 1 file path, required
+      -r2 READ2, --read2 READ2
+                            Read 2 file path
+      -f DATA_FORMAT, --data_format DATA_FORMAT
+                            Sequence data format
+      -t THREADS, --threads THREADS
+                            Number of threads
+      -s, --host_subset     Subset host sequences before Kaiju
+      -m TRIM_MINLEN, --trim_minlen TRIM_MINLEN
+                            Trimmomatic minimum length
+      -a TRIM_ADAPT, --trim_adapt TRIM_ADAPT
+                            Illumina adapter sequence file
+      -q KRAKEN_QUICK, --kraken_quick KRAKEN_QUICK
+                            Number of minium hits by Kraken
+      -p, --kraken_preload  Kraken preload database
+      -c KAIJU_SCORE, --kaiju_score KAIJU_SCORE
+                            Kaju alignment score
+      -l KAIJU_MINLEN, --kaiju_minlen KAIJU_MINLEN
+                            Kaju minimum length
+      -i KAIJU_MISMATCH, --kaiju_mismatch KAIJU_MISMATCH
+                            Kaju allowed mismatches
 
     ]]></help>
     <citations>
