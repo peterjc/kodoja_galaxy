@@ -72,6 +72,25 @@ Kodoja is a tool intended to identify viral sequences in a
 FASTQ/FASTA sequencing run by matching them against both
 Kraken and Kaiju databases.
 
+The main output is a five column tab-separated table as follows
+(tabular format in Galaxy):
+
+1. Species name
+2. NCBI taxonomy identify
+3. Kraken read count for this species
+4. Kaiju read count for this species
+5. Kraken and Kaiju read count for this species (intersection)
+
+For example,
+
+================================== ====== ====== ===== ========
+Species                            Tax_ID kraken kaiju combined
+---------------------------------- ------ ------ ----- --------
+Cassava brown streak virus         137758     45    45       45
+Ugandan cassava brown streak virus 946046     28    28       28                                                              
+Tobacco etch virus                  12227     21    19       19
+================================== ====== ====== ===== ======== 
+
 This is the command line tool's help::
 
     usage: kodoja_search.py [-h] [--version] -o OUTPUT_DIR -d1 KRAKEN_DB -d2
