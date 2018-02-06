@@ -62,11 +62,36 @@ kodoja_search.py
             <when value="no">
                 <param format="fasta,fastq" label="Input sequences" name="input_sequences" type="data" help="FASTA or FASTQ datasets"/>
             </when>
-
         </conditional>
     </inputs>
     <outputs>
+        <data name="combined_table" format="tabular" label="Kodoja species report for ${on_string}" />
     </outputs>
+    <tests>
+        <test>
+            <param name="kraken_database" value="kraken3viruses" />
+            <param name="kaiju_database" value="kaiju3viruses" />
+            <param name="single_paired.single_paired_selector" value="no" />
+            <param name="single_paired.input_sequences" value="testData_1.fastq" ftype="fastq" />
+            <output name="combined_table" file="virus_table_SE_fastq.tabular" ftype="tabular" />
+        </test>
+        <test>
+            <param name="kraken_database" value="kraken3viruses" />
+            <param name="kaiju_database" value="kaiju3viruses" />
+            <param name="single_paired.single_paired_selector" value="yes" />
+	    <param name="single_paired.forward_input" value="testData_1.fastq" ftype="fastq" />
+	    <param name="single_paired.reverse_input" value="testData_2.fastq" ftype="fastq" />
+            <output name="combined_table" file="virus_table_PE_fastq.tabular" ftype="tabular" />
+        </test>
+        <test>
+            <param name="kraken_database" value="kraken3viruses" />
+            <param name="kaiju_database" value="kaiju3viruses" />
+            <param name="single_paired.single_paired_selector" value="yes" />
+            <param name="single_paired.forward_input" value="testData_1.fasta" ftype="fasta" />
+            <param name="single_paired.reverse_input" value="testData_2.fasta" ftype="fasta" />
+            <output name="combined_table" file="virus_table_PE_fasta.tabular" ftype="tabular" />
+        </test>
+    </tests>
     <help><![CDATA[
 Kodoja is a tool intended to identify viral sequences in a
 FASTQ/FASTA sequencing run by matching them against both
