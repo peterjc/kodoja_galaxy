@@ -47,7 +47,7 @@ before_install:
  - echo "Using flake8 to check Python code"
  - flake8 --max-line-length 120 --ignore E402 .
  - echo "Using restructuredtext-lint to check our RST files"
- - restructuredtext-lint *.rst */*/*.rst
+ - restructuredtext-lint *.rst
  - pip install planemo requests
  - echo "Using planemo lint to check for obvious tool errors"
  - planemo shed_lint --tools --fail_level error --ensure_metadata -r ${TRAVIS_BUILD_DIR}
@@ -88,7 +88,7 @@ install:
 script:
  - cd ${TRAVIS_BUILD_DIR}
  - planemo --version
- - planemo test --galaxy_root ${TRAVIS_BUILD_DIR}/galaxy-${GALAXY_BRANCH} --skip_venv tools/
+ - planemo test --galaxy_root ${TRAVIS_BUILD_DIR}/galaxy-${GALAXY_BRANCH} --skip_venv .
 
 notifications:
   email: false
