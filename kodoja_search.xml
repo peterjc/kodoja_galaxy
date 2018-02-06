@@ -51,7 +51,7 @@ kodoja_search.py
             <param name="single_paired_selector" type="select" label="Single or paired reads" help="--paired">
                 <!-- TODO?
                 <option value="collection">Collection</option>
-		-->
+                -->
                 <option value="yes">Paired</option>
                 <option selected="True" value="no">Single</option>
             </param>
@@ -79,8 +79,8 @@ kodoja_search.py
             <param name="kraken_database" value="kraken3viruses" />
             <param name="kaiju_database" value="kaiju3viruses" />
             <param name="single_paired.single_paired_selector" value="yes" />
-	    <param name="single_paired.forward_input" value="testData_1.fastq" ftype="fastq" />
-	    <param name="single_paired.reverse_input" value="testData_2.fastq" ftype="fastq" />
+            <param name="single_paired.forward_input" value="testData_1.fastq" ftype="fastq" />
+            <param name="single_paired.reverse_input" value="testData_2.fastq" ftype="fastq" />
             <output name="combined_table" file="virus_table_PE_fastq.tabular" ftype="tabular" />
         </test>
         <test>
