@@ -57,7 +57,7 @@ before_install:
  - mkdir -p "$HOME/.python-eggs"
  - chmod 700 "$HOME/.python-eggs" 
  - echo "Fetching Galaxy ${GALAXY_BRANCH} branch..."
- - cd ${TRAVIS_BUILD_DIR}
+ - cd ${HOME}
  - wget https://codeload.github.com/galaxyproject/galaxy/tar.gz/${GALAXY_BRANCH}
  - tar -zxvf ${GALAXY_BRANCH} | tail
  - cd galaxy-${GALAXY_BRANCH}
@@ -71,12 +71,12 @@ before_install:
 # Note https://github.com/galaxyproject/planemo/issues/530 workaround
 
 install:
- - cd ${TRAVIS_BUILD_DIR}/galaxy-${GALAXY_BRANCH}
+ - cd ${HOME}/galaxy-${GALAXY_BRANCH}
  - export GALAXY_TEST_UPLOAD_ASYNC=false
  - export GALAXY_TEST_DB_TEMPLATE=https://github.com/jmchilton/galaxy-downloads/raw/master/db_gx_rev_0127.sqlite
 # Explicitly use sample files to generate default *.loc files
  - for f in ${TRAVIS_BUILD_DIR}/tool-data/*.loc.sample; do cp "$f" "${f%.sample}"; done
- - cp ${TRAVIS_BUILD_DIR}/tool-data/*.loc ${TRAVIS_BUILD_DIR}/galaxy-${GALAXY_BRANCH}/tool-data/
+ - cp ${TRAVIS_BUILD_DIR}/tool-data/*.loc ${HOME}/galaxy-${GALAXY_BRANCH}/tool-data/
  - bash scripts/common_startup.sh --no-create-venv --dev-wheels
 
 
@@ -88,7 +88,7 @@ install:
 script:
  - cd ${TRAVIS_BUILD_DIR}
  - planemo --version
- - planemo test --galaxy_root ${TRAVIS_BUILD_DIR}/galaxy-${GALAXY_BRANCH} --skip_venv ${TRAVIS_BUILD_DIR}
+ - planemo test --galaxy_root ${HOME}/galaxy-${GALAXY_BRANCH} --skip_venv ${TRAVIS_BUILD_DIR}
 
 notifications:
   email: false
