@@ -74,9 +74,12 @@ install:
  - cd ${HOME}/galaxy-${GALAXY_BRANCH}
  - export GALAXY_TEST_UPLOAD_ASYNC=false
  - export GALAXY_TEST_DB_TEMPLATE=https://github.com/jmchilton/galaxy-downloads/raw/master/db_gx_rev_0127.sqlite
-# Explicitly use sample files to generate default *.loc files
+ # Explicitly use sample files to generate default *.loc files
  - for f in ${TRAVIS_BUILD_DIR}/tool-data/*.loc.sample; do cp "$f" "${f%.sample}"; done
+ # Then explicitly override them with any non-sample *.loc files
  - cp ${TRAVIS_BUILD_DIR}/tool-data/*.loc ${HOME}/galaxy-${GALAXY_BRANCH}/tool-data/
+ # Then explicitly override them with any test *.loc files
+ - cp ${TRAVIS_BUILD_DIR}/test-data/*.loc ${HOME}/galaxy-${GALAXY_BRANCH}/tool-data/
  - bash scripts/common_startup.sh --no-create-venv --dev-wheels
 
 
