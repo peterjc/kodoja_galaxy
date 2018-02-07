@@ -1,0 +1,38 @@
+# This is a special configuration file to run tests on Travis-CI via
+# GitHub notifications when changes are committed.
+
+# Galaxy currently only supports Python 2.7
+language: python
+python: "2.7"
+cache: pip
+
+# Planemo Lint
+# ============
+#
+# Planemo can be run to check tools separately from Galaxy, and this
+# is fast so we do it *before* the slow process of installing Galaxy
+# and running the tool tests.
+
+before_install:
+ - "if grep -P '\t' *.rst; then echo 'Tabs are bad, please use four spaces in RST files.'; false; fi"
+ - "if grep -P '\t' *.xml; then echo 'Tabs are bad, please use four spaces in XML files.'; false; fi"
+ - "if grep -P '\t' .shed.yml; then echo 'Tabs are bad, please use four spaces in shed YAML files.'; false; fi"
+ - "if grep -n -r '[[:blank:]]$' *.rst; then echo 'Please remove trailing whitespace in RST files.'; false; fi"
+ - "if grep -n -r '[[:blank:]]$' *.xml; then echo 'Please remove trailing whitespace in XML files.'; false; fi"
+ - "if grep -n -r '[[:blank:]]$' .shed.yml; then echo 'Please remove trailing whitespace in shed YAML files.'; false; fi"
+ - pip install --upgrade pip setuptools
+ - pip install restructuredtext-lint
+ - echo "Using restructuredtext-lint to check our RST files"
+ - restructuredtext-lint *.rst
+ - pip install planemo
+ - echo "Using planemo lint to check for obvious tool errors"
+ - planemo shed_lint --tools --fail_level error --ensure_metadata -r ${TRAVIS_BUILD_DIR}
+
+install:
+ - echo "TODO - Setup Galaxy/Planemo testing framework"
+
+script:
+ - echo "TODO - Run planemo test"
+
+notifications:
+  email: false
