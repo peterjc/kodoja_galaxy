@@ -12,17 +12,17 @@ kodoja_search.py
 
 #if $single_paired.single_paired_selector == 'yes'
     #if $forward_input.is_of_type( 'fastq' ):
-        --format fastq
+        --data_format fastq
     #else:
-        --format fasta
+        --data_format fasta
     #end if
     --read1 '${single_paired.forward_input}'
     --read2 '${single_paired.reverse_input}'
 #else:
     #if $single_paired.input_sequences.is_of_type('fastq')
-        --format fastq
+        --data_format fastq
     #else:
-        --format fasta
+        --data_format fasta
     #end if
     --read1 '${single_paired.input_sequences}'
 #end if
@@ -35,7 +35,9 @@ kodoja_search.py
 ## -c kaiju_score
 ## -l kaiju_minlen
 ## -i kaiju_mismatch
-## -o output_dir
+
+## We'll capture predictably named output files from here:
+-o .
     ]]></command>
     <inputs>
         <param label="Select a Kraken database" name="kraken_db" type="select">
