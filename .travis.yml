@@ -12,10 +12,14 @@ jobs:
   include:
     - stage: test
       python: "2.7"
-      env: GALAXY_BRANCH=master
+      env:
+       - GALAXY_REPO=galaxyproject/galaxy
+       - GALAXY_BRANCH=master
     - stage: test
       python: "2.7"
-      env: GALAXY_BRANCH=dev
+      env:
+       - GALAXY_REPO=peterjc/galaxy
+       - GALAXY_BRANCH=master-debug
 
 # Planemo Lint
 # ============
@@ -53,7 +57,7 @@ before_install:
  - chmod 700 "$HOME/.python-eggs"
  - echo "Fetching Galaxy ${GALAXY_BRANCH} branch..."
  - cd ${HOME}
- - wget https://codeload.github.com/galaxyproject/galaxy/tar.gz/${GALAXY_BRANCH}
+ - wget https://codeload.github.com/${GALAXY_REPO}/tar.gz/${GALAXY_BRANCH}
  - tar -zxvf ${GALAXY_BRANCH} | tail
  - cd galaxy-${GALAXY_BRANCH}
 
