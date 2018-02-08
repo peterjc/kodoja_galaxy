@@ -71,24 +71,24 @@ kodoja_search.py
         <test>
             <param name="kraken_db" value="kraken3viruses" />
             <param name="kaiju_db" value="kaiju3viruses" />
-            <param name="single_paired.single_paired_selector" value="no" />
-            <param name="single_paired.input_sequences" value="testData_1.fastq" ftype="fastq" />
+            <param name="single_paired_selector" value="no" />
+            <param name="input_sequences" value="testData_1.fastq" ftype="fastq" />
             <output name="combined_table" file="virus_table_SE_fastq.tabular" ftype="tabular" />
         </test>
         <test>
             <param name="kraken_db" value="kraken3viruses" />
             <param name="kaiju_db" value="kaiju3viruses" />
-            <param name="single_paired.single_paired_selector" value="yes" />
-            <param name="single_paired.forward_input" value="testData_1.fastq" ftype="fastq" />
-            <param name="single_paired.reverse_input" value="testData_2.fastq" ftype="fastq" />
+            <param name="single_paired_selector" value="yes" />
+            <param name="forward_input" value="testData_1.fastq" ftype="fastq" />
+            <param name="reverse_input" value="testData_2.fastq" ftype="fastq" />
             <output name="combined_table" file="virus_table_PE_fastq.tabular" ftype="tabular" />
         </test>
         <test>
             <param name="kraken_db" value="kraken3viruses" />
             <param name="kaiju_db" value="kaiju3viruses" />
-            <param name="single_paired.single_paired_selector" value="yes" />
-            <param name="single_paired.forward_input" value="testData_1.fasta" ftype="fasta" />
-            <param name="single_paired.reverse_input" value="testData_2.fasta" ftype="fasta" />
+            <param name="single_paired_selector" value="yes" />
+            <param name="forward_input" value="testData_1.fasta" ftype="fasta" />
+            <param name="reverse_input" value="testData_2.fasta" ftype="fasta" />
             <output name="combined_table" file="virus_table_PE_fasta.tabular" ftype="tabular" />
         </test>
     </tests>
