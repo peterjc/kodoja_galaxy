@@ -27,14 +27,15 @@ kodoja_search.py
     --read1 '${single_paired.input_sequences}'
 #end if
 
--m min_trim
--a trim_adapt
--q kraken_quick
--p kraken_preload
--c kaiju_score
--l kaiju_minlen
--i kaiju_mismatch
--o output_dir
+## TODO:
+## -m min_trim
+## -a trim_adapt
+## -q kraken_quick
+## -p kraken_preload
+## -c kaiju_score
+## -l kaiju_minlen
+## -i kaiju_mismatch
+## -o output_dir
     ]]></command>
     <inputs>
         <param label="Select a Kraken database" name="kraken_db" type="select">
