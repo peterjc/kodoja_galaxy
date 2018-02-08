@@ -1,60 +1,162 @@
 <tool id="kodoja_search" name="Kodoja database search" version="0.0.0">
-    <description>identifying viruses from plant RNA sequencing data</description>
+    <description>identify viruses from plant RNA sequencing data</description>
     <requirements>
-        <requirement type="package">kraken</requirement>
+        <requirement type="package">kodoja</requirement>
     </requirements>
     <version_command>kodoja_search.py --version</version_command>
     <command detect_errors="exit_code"><![CDATA[
-        kodoja_search.py -o output_dir -d1 kraken_db -d2 kaiju_db -r1 read1 -r2 read2 -f format -m min_trim -a trim_adapt -q kraken_quick -p kraken_preload -c kaiju_score -l kaiju_minlen -i kaiju_mismatch
+kodoja_search.py
+
+--kraken_db '${kraken_db.fields.path}'
+--kaiju_db '${kaiju_db.fields.path}'
+
+#if $single_paired.single_paired_selector == 'yes'
+    #if $forward_input.is_of_type( 'fastq' ):
+        --format fastq
+    #else:
+        --format fasta
+    #end if
+    --read1 '${single_paired.forward_input}'
+    --read2 '${single_paired.reverse_input}'
+#else:
+    #if $single_paired.input_sequences.is_of_type('fastq')
+        --format fastq
+    #else:
+        --format fasta
+    #end if
+    --read1 '${single_paired.input_sequences}'
+#end if
+
+-m min_trim
+-a trim_adapt
+-q kraken_quick
+-p kraken_preload
+-c kaiju_score
+-l kaiju_minlen
+-i kaiju_mismatch
+-o output_dir
     ]]></command>
     <inputs>
-        <param type="data" name="kraken_db" format="" />
-        <param type="data" name="kaiju_db" format="" />
-        <param type="data" name="read1" format="" />
-        <param type="data" name="read2" format="" />
+        <param label="Select a Kraken database" name="kraken_db" type="select">
+            <options from_data_table="kraken_databases">
+                <validator message="No Kraken database is available" type="no_options" />
+            </options>
+        </param>
+        <param label="Select a Kaiju database" name="kaiju_db" type="select">
+            <options from_data_table="kaiju_databases">
+                <validator message="No Kaiju database is available" type="no_options" />
+            </options>
+        </param>
+        <conditional name="single_paired">
+            <param name="single_paired_selector" type="select" label="Single or paired reads" help="--paired">
+                <!-- TODO?
+                <option value="collection">Collection</option>
+                -->
+                <option value="yes">Paired</option>
+                <option selected="True" value="no">Single</option>
+            </param>
+            <when value="yes">
+                <param format="fasta,fastq" name="forward_input" type="data" label="Forward strand" help="FASTA or FASTQ dataset"/>
+                <param format="fasta,fastq" name="reverse_input" type="data" label="Reverse strand" help="FASTA or FASTQ dataset"/>
+            </when>
+            <when value="no">
+                <param format="fasta,fastq" label="Input sequences" name="input_sequences" type="data" help="FASTA or FASTQ datasets"/>
+            </when>
+        </conditional>
     </inputs>
     <outputs>
+        <data name="combined_table" format="tabular" label="Kodoja species report for ${on_string}" />
     </outputs>
+    <tests>
+        <test>
+            <param name="kraken_db" value="kraken3viruses" />
+            <param name="kaiju_db" value="kaiju3viruses" />
+            <param name="single_paired.single_paired_selector" value="no" />
+            <param name="single_paired.input_sequences" value="testData_1.fastq" ftype="fastq" />
+            <output name="combined_table" file="virus_table_SE_fastq.tabular" ftype="tabular" />
+        </test>
+        <test>
+            <param name="kraken_db" value="kraken3viruses" />
+            <param name="kaiju_db" value="kaiju3viruses" />
+            <param name="single_paired.single_paired_selector" value="yes" />
+            <param name="single_paired.forward_input" value="testData_1.fastq" ftype="fastq" />
+            <param name="single_paired.reverse_input" value="testData_2.fastq" ftype="fastq" />
+            <output name="combined_table" file="virus_table_PE_fastq.tabular" ftype="tabular" />
+        </test>
+        <test>
+            <param name="kraken_db" value="kraken3viruses" />
+            <param name="kaiju_db" value="kaiju3viruses" />
+            <param name="single_paired.single_paired_selector" value="yes" />
+            <param name="single_paired.forward_input" value="testData_1.fasta" ftype="fasta" />
+            <param name="single_paired.reverse_input" value="testData_2.fasta" ftype="fasta" />
+            <output name="combined_table" file="virus_table_PE_fasta.tabular" ftype="tabular" />
+        </test>
+    </tests>
     <help><![CDATA[
-        usage: kodoja_search.py [-h] [--version] -o OUTPUT_DIR -d1 KRAKEN_DB -d2
-                        KAIJU_DB -r1 READ1 [-r2 READ2] [-f DATA_FORMAT]
-                        [-t THREADS] [-s] [-m TRIM_MINLEN] [-a TRIM_ADAPT]
-                        [-q KRAKEN_QUICK] [-p] [-c KAIJU_SCORE]
-                        [-l KAIJU_MINLEN] [-i KAIJU_MISMATCH]
+Kodoja is a tool intended to identify viral sequences in a
+FASTQ/FASTA sequencing run by matching them against both
+Kraken and Kaiju databases.
 
-Kodoja
+The main output is a five column tab-separated table as follows
+(tabular format in Galaxy):
 
-optional arguments:
-  -h, --help            show this help message and exit
-  --version             show program's version number and exit
-  -o OUTPUT_DIR, --output_dir OUTPUT_DIR
-                        Output directory path, required
-  -d1 KRAKEN_DB, --kraken_db KRAKEN_DB
-                        Kraken database path, required
-  -d2 KAIJU_DB, --kaiju_db KAIJU_DB
-                        Kaiju database path, required
-  -r1 READ1, --read1 READ1
-                        Read 1 file path, required
-  -r2 READ2, --read2 READ2
-                        Read 2 file path
-  -f DATA_FORMAT, --data_format DATA_FORMAT
-                        Sequence data format
-  -t THREADS, --threads THREADS
-                        Number of threads
-  -s, --host_subset     Subset host sequences before Kaiju
-  -m TRIM_MINLEN, --trim_minlen TRIM_MINLEN
-                        Trimmomatic minimum length
-  -a TRIM_ADAPT, --trim_adapt TRIM_ADAPT
-                        Illumina adapter sequence file
-  -q KRAKEN_QUICK, --kraken_quick KRAKEN_QUICK
-                        Number of minium hits by Kraken
-  -p, --kraken_preload  Kraken preload database
-  -c KAIJU_SCORE, --kaiju_score KAIJU_SCORE
-                        Kaju alignment score
-  -l KAIJU_MINLEN, --kaiju_minlen KAIJU_MINLEN
-                        Kaju minimum length
-  -i KAIJU_MISMATCH, --kaiju_mismatch KAIJU_MISMATCH
-                        Kaju allowed mismatches
+1. Species name
+2. NCBI taxonomy identify
+3. Kraken read count for this species
+4. Kaiju read count for this species
+5. Kraken and Kaiju read count for this species (intersection)
+
+For example,
+
+================================== ====== ====== ===== ========
+Species                            Tax_ID kraken kaiju combined
+---------------------------------- ------ ------ ----- --------
+Cassava brown streak virus         137758     45    45       45
+Ugandan cassava brown streak virus 946046     28    28       28
+Tobacco etch virus                  12227     21    19       19
+================================== ====== ====== ===== ========
+
+This is the command line tool's help::
+
+    usage: kodoja_search.py [-h] [--version] -o OUTPUT_DIR -d1 KRAKEN_DB -d2
+    KAIJU_DB -r1 READ1 [-r2 READ2] [-f DATA_FORMAT]
+    [-t THREADS] [-s] [-m TRIM_MINLEN] [-a TRIM_ADAPT]
+    [-q KRAKEN_QUICK] [-p] [-c KAIJU_SCORE]
+    [-l KAIJU_MINLEN] [-i KAIJU_MISMATCH]
+
+    Kodoja
+
+    optional arguments:
+      -h, --help            show this help message and exit
+      --version             show program's version number and exit
+      -o OUTPUT_DIR, --output_dir OUTPUT_DIR
+                            Output directory path, required
+      -d1 KRAKEN_DB, --kraken_db KRAKEN_DB
+                            Kraken database path, required
+      -d2 KAIJU_DB, --kaiju_db KAIJU_DB
+                            Kaiju database path, required
+      -r1 READ1, --read1 READ1
+                            Read 1 file path, required
+      -r2 READ2, --read2 READ2
+                            Read 2 file path
+      -f DATA_FORMAT, --data_format DATA_FORMAT
+                            Sequence data format
+      -t THREADS, --threads THREADS
+                            Number of threads
+      -s, --host_subset     Subset host sequences before Kaiju
+      -m TRIM_MINLEN, --trim_minlen TRIM_MINLEN
+                            Trimmomatic minimum length
+      -a TRIM_ADAPT, --trim_adapt TRIM_ADAPT
+                            Illumina adapter sequence file
+      -q KRAKEN_QUICK, --kraken_quick KRAKEN_QUICK
+                            Number of minium hits by Kraken
+      -p, --kraken_preload  Kraken preload database
+      -c KAIJU_SCORE, --kaiju_score KAIJU_SCORE
+                            Kaju alignment score
+      -l KAIJU_MINLEN, --kaiju_minlen KAIJU_MINLEN
+                            Kaju minimum length
+      -i KAIJU_MISMATCH, --kaiju_mismatch KAIJU_MISMATCH
+                            Kaju allowed mismatches
 
     ]]></help>
     <citations>

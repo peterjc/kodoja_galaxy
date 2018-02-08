@@ -1,0 +1,11 @@
+name: kodoja
+owner: abaizan
+homepage_url: https://github.com/abaizan/kodoja
+remote_repository_url: https://github.com/abaizan/kodoja_galaxy
+description: 'Kodoja: A workflow for virus detection in plants using k-mer analysis of RNA-sequencing data'
+long_description: |
+  Kodoja is a workflow for virus detection in plants using
+  Kraken and Kaiju to perform k-mer analysis of RNA-sequencing.
+categories:
+- Sequence Analysis
+type: unrestricted
