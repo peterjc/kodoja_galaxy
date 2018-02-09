@@ -18,8 +18,8 @@ jobs:
     - stage: test
       python: "2.7"
       env:
-       - GALAXY_REPO=peterjc/galaxy
-       - GALAXY_BRANCH=conda_env_at_sign
+       - GALAXY_REPO=galaxyproject/galaxy
+       - GALAXY_BRANCH=dev
 
 # Planemo Lint
 # ============
