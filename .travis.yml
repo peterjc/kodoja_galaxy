@@ -55,6 +55,14 @@ before_install:
  - echo "Fixing permissions on Python eggs cache folder"
  - mkdir -p "$HOME/.python-eggs"
  - chmod 700 "$HOME/.python-eggs"
+ # ==============================================
+ - "echo Fetching NCBI taxonomy"
+ - "cd test-data/taxonomy"
+ - "rm -rf *.dmp"
+ - "wget ftp://ftp.ncbi.nih.gov/pub/taxonomy/taxdump.tar.gz"
+ - "tar zxvf taxdump.tar.gz"
+ - "cd ../.."
+ # ==============================================
  - echo "Fetching Galaxy ${GALAXY_BRANCH} branch..."
  - cd ${HOME}
  - wget https://codeload.github.com/${GALAXY_REPO}/tar.gz/${GALAXY_BRANCH}
