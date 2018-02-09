@@ -19,7 +19,7 @@ jobs:
       python: "2.7"
       env:
        - GALAXY_REPO=peterjc/galaxy
-       - GALAXY_BRANCH=master-debug
+       - GALAXY_BRANCH=conda_env_at_sign
 
 # Planemo Lint
 # ============
