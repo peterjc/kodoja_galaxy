@@ -38,7 +38,9 @@ kodoja_search.py
 
 ## We'll capture predictably named output files from here:
 -o .
-    ]]></command>
+&&
+mv ./virus_table.txt '$combined_table'
+]]></command>
     <inputs>
         <param label="Select a Kraken database" name="kraken_db" type="select">
             <options from_data_table="kraken_databases">
