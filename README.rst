@@ -80,6 +80,10 @@ To just build and check the tar ball, use::
 
     $ planemo shed_upload -t testtoolshed --tar_only .
     ...
+    $ tar -tzf shed_upload.tar.gz
+    LICENSE.txt
+    README.rst
+    ...
 
 This simplifies ensuring a consistent set of files is bundled each time,
 including all the relevant test files.
