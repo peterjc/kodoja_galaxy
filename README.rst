@@ -1,5 +1,9 @@
-This is a Galaxy wrapper for the tool Kodoja, which is
-available to install in conda from bioconda.
+.. image:: https://travis-ci.org/abaizan/kodoja_galaxy.svg?branch=master
+   :alt: Linux testing with TravisCI
+   :target: https://travis-ci.org/abaizan/kodoja_galaxy/branches
+
+This is a Galaxy wrapper for the tool Kodoja, which is available to install in
+conda from bioconda.
 
 https://github.com/abaizan/kodoja
 
