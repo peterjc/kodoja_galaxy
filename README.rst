@@ -81,7 +81,7 @@ To just build and check the tar ball, use::
     $ planemo shed_upload -t testtoolshed --tar_only .
     ...
     $ tar -tzf shed_upload.tar.gz
-    LICENSE.txt
+    LICENSE
     README.rst
     ...
 
