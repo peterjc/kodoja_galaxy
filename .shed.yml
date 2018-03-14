@@ -24,7 +24,6 @@ include:
 - test-data/krakenDB_test/taxonomy/names.dmp
 - test-data/krakenDB_test/taxonomy/nodes.dmp
 - test-data/kraken_databases.loc
-- test-data/taxonomy/README.txt
 - test-data/taxonomy/names.dmp
 - test-data/taxonomy/nodes.dmp
 - test-data/testData_1.fasta
