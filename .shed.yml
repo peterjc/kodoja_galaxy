@@ -34,6 +34,8 @@ include:
 - test-data/virus_table_PE_fasta.tabular
 - test-data/virus_table_PE_fastq.tabular
 - test-data/virus_table_SE_fastq.tabular
+- tool-data/kaiju_databases.loc.sample
+- tool-data/kaiju_databases.loc.sample
 - tool_data_table_conf.xml.sample
 - tool_data_table_conf.xml.test
 - tool_data_table_conf.xml.sample
