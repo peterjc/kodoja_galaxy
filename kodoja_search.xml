@@ -169,9 +169,9 @@ This is the command line tool's help::
     <citations>
         <citation type="bibtex">
 @misc{githubkodoja,
-  author = {LastTODO, FirstTODO},
-  year = {TODO},
-  title = {kodoja},
+  author = {Baizan Edge, Amanda},
+  year = {2018},
+  title = {Kodoja},
   publisher = {GitHub},
   journal = {GitHub repository},
   url = {https://github.com/abaizan/kodoja},
