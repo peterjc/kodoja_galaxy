@@ -17,7 +17,6 @@ include:
 - test-data/kaijuDB_test/names.dmp
 - test-data/kaijuDB_test/nodes.dmp
 - test-data/kaiju_databases.loc
-- test-data/krakenDB_test/accmap_file.tmp
 - test-data/krakenDB_test/database.idx
 - test-data/krakenDB_test/database.kdb
 - test-data/krakenDB_test/log_file.txt
