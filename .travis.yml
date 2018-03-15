@@ -87,7 +87,9 @@ install:
 script:
  - cd ${TRAVIS_BUILD_DIR}
  - planemo --version
- - planemo test --conda_dependency_resolution --conda_auto_install --conda_channels iuc,bioconda,conda-forge,defaults --galaxy_branch ${GALAXY_BRANCH} .
+ - export GALAXY_REPO=https://github.com/peterjc/galaxy
+ - if [ "${GALAXY_BRANCH}" == "dev" ] then export GALAXY_BRANCH=kk_db; fi
+ - planemo test --conda_dependency_resolution --conda_auto_install --conda_channels iuc,bioconda,conda-forge,defaults --galaxy_branch "${GALAXY_BRANCH}" --galaxy_source "$GALAXY_REPO" .
 
 notifications:
   email: false
