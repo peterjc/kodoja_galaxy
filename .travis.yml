@@ -16,7 +16,31 @@ jobs:
     - stage: test
       python: "2.7"
       env: GALAXY_BRANCH=dev
+    - stage: deploy
+      before_install:
+        - echo "Since the tests passed, will deploy to the Test Tool Shed"
+      install:
+        - pip install --upgrade pip setuptools
+        - pip install planemo
+      script:
+        - if [ "$TTS_KEY" == "" ]; then echo "Missing Test Tool Shed API key in environment variable TTS_KEY"; false; fi
+        - if [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$TRAVIS_BRANCH" == "master" ]; then planemo shed_update --shed_target testtoolshed --check_diff --shed_key_from_env TTS_KEY .; true; fi
 
+# Deployment
+# ==========
+# This is done with the new TravisCI stages feature, see
+# https://blog.travis-ci.com/2017-05-11-introducing-build-stages
+#
+# Assumes you have set $TTS_KEY in the TravisCI interface,
+# and that the test stage passed.
+#
+# As the deploy is run on a new VM, remove black-listed tools.
+#
+# Note use of "true" after the "planemo shed_update" which is
+# a work-around for a Tool Shed administration rights issue, see
+# https://github.com/galaxyproject/planemo/issues/543
+#
+#
 # Planemo Lint
 # ============
 #
