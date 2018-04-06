@@ -53,7 +53,7 @@ mv ./virus_table.txt '$combined_table'
             </options>
         </param>
         <conditional name="single_paired">
-            <param name="single_paired_selector" type="select" label="Single or paired reads" help="--paired">
+            <param name="single_paired_selector" type="select" label="Single or paired reads">
                 <!-- TODO?
                 <option value="collection">Collection</option>
                 -->
