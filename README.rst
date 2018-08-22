@@ -53,6 +53,7 @@ History
 Version Changes
 ------- ----------------------------------------------------------------------
 v0.0.0  - Initial release covering ``kodoja_search.py`` v0.0.3.
+v0.0.4  - Minor update to call ``kodoja_search.py`` v0.0.4.
 ======= ======================================================================
 
 
