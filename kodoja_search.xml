@@ -102,8 +102,8 @@ Kodoja is a tool intended to identify viral sequences in a
 FASTQ/FASTA sequencing run by matching them against both
 Kraken and Kaiju databases.
 
-The main output is a five column tab-separated table as follows
-(tabular format in Galaxy):
+The main output is a tab-separated table as follows (tabular format in Galaxy)
+with the following columns:
 
 1. Species name
 2. Species NCBI taxonomy identifier (TaxID)
