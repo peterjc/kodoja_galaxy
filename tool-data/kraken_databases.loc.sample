@@ -8,7 +8,7 @@
 #   sub-directory named taxonomy containing files from the
 #   NCBI named ``names.dmp`` and ``nodes.dmp``
 #
-# e.g.
+# e.g. using the database provided with the kraken-using tool
+# kodoja at https://doi.org/10.5281/zenodo.1406071
 #
-# plants_dec_2017(tab)Plants (December 2017)(tab)/mnt/shared/kraken_db/plants_2017_12/
-#
+# kodojaDB_v1.0_kraken(tab)KodojaDB v1.0 (kraken), Sept 2018(tab)/mnt/shared/data/kodojaDB_v1.0/krakenDB

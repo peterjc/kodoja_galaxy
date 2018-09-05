@@ -1,7 +1,7 @@
-<tool id="kodoja_search" name="Kodoja database search" version="0.0.4">
+<tool id="kodoja_search" name="Kodoja database search" version="0.0.6">
     <description>identify viruses from plant RNA sequencing data</description>
     <requirements>
-        <requirement type="package" version="0.0.4">kodoja</requirement>
+        <requirement type="package" version="0.0.6">kodoja</requirement>
     </requirements>
     <version_command>kodoja_search.py --version</version_command>
     <command detect_errors="exit_code"><![CDATA[

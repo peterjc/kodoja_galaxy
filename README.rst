@@ -45,6 +45,27 @@ files ``kraken_databases.loc`` and ``kaiju_databases.loc`` which are located
 in the ``tool-data/`` folder. Sample files are included which explain the
 tab-based format to use.
 
+For example, using https://doi.org/10.5281/zenodo.1406071 which is the
+database provided with Kodoja::
+
+    $ cd /mnt/shared/data/
+    $ mkdir kodojaDB_v1.0
+    $ cd kodojaDB_v1.0
+    $ wget https://zenodo.org/record/1406071/files/kodojaDB_v1.0.tar.gz
+    $ tar -zxvf kodojaDB_v1.0.tar.gz
+
+Then update your Galaxy configuration in ``tool-data/kraken_databases.loc``
+to add a line like this::
+
+    kodojaDB_v1.0_kraken(tab)KodojaDB v1.0 (kraken), Sept 2018(tab)/mnt/shared/data/kodojaDB_v1.0/krakenDB
+
+And likewise update ``tool-data/kaiju_databases.loc`` with a line like::
+
+    kodojaDB_v1.0_kaiju(tab)KodojaDB v1.0 (kaiju), Sept 2018(tab)/mnt/shared/data/kodojaDB_v1.0/kaijuDB
+
+At the time of writing, reloading the ``*.loc`` files required restarting
+the Galaxy server.
+
 
 History
 =======
@@ -54,6 +75,8 @@ Version Changes
 ------- ----------------------------------------------------------------------
 v0.0.0  - Initial release covering ``kodoja_search.py`` v0.0.3.
 v0.0.4  - Minor update to call ``kodoja_search.py`` v0.0.4.
+v0.0.6  - Minor update to call ``kodoja_search.py`` v0.0.6.
+        - Document installing the Kodoja databases from Zenodo.
 ======= ======================================================================
 
 

@@ -7,7 +7,7 @@
 #   files named ``kaiju_library.fmi``, ``names.dmp`` and
 #   ``nodes.dmp`` (the later being NCBI taxonomy files).
 #
-# e.g.
+# e.g. using the database provided with the kaiju-using tool
+# kodoja at https://doi.org/10.5281/zenodo.1406071
 #
-# plants_dec_2017(tab)Plants (December 2017)(tab)/mnt/shared/kaiju_db/plants_2017_12/
-#
+# kodojaDB_v1.0_kraken(tab)KodojaDB v1.0 (kaiju), Sept 2018(tab)/mnt/shared/data/kodojaDB_v1.0/kaijuDB
