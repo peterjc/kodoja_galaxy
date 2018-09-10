@@ -77,6 +77,9 @@ v0.0.0  - Initial release covering ``kodoja_search.py`` v0.0.3.
 v0.0.4  - Minor update to call ``kodoja_search.py`` v0.0.4.
 v0.0.6  - Minor update to call ``kodoja_search.py`` v0.0.6.
         - Document installing the Kodoja databases from Zenodo.
+v0.0.7  - Minor update to call ``kodoja_search.py`` v0.0.6.
+        - Update help text, including zeros in columns 6 and 7.
+        - Support ``$GALAXY_SLOTS``, defaulting to using four threads.
 ======= ======================================================================
 
 

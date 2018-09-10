@@ -1,12 +1,12 @@
-<tool id="kodoja_search" name="Kodoja database search" version="0.0.6">
+<tool id="kodoja_search" name="Kodoja database search" version="0.0.7">
     <description>identify viruses from plant RNA sequencing data</description>
     <requirements>
-        <requirement type="package" version="0.0.6">kodoja</requirement>
+        <requirement type="package" version="0.0.7">kodoja</requirement>
     </requirements>
     <version_command>kodoja_search.py --version</version_command>
     <command detect_errors="exit_code"><![CDATA[
 kodoja_search.py
-
+-t="\${GALAXY_SLOTS:-4}"
 --kraken_db '${kraken_db.fields.path}'
 --kaiju_db '${kaiju_db.fields.path}'
 
@@ -113,42 +113,22 @@ with the following columns:
 6. Number of reads assigned by *either* Kraken or Kaiju to this genus
 7. Number of reads assigned by *both* Kraken and Kaiju to this genus
 
+The counts in columns 6 and 7 are for reads assigned to that genus, but not
+to any species within it.
+
 For example,
 
 ================================== ============= ================= ============================= ========== =============== ===========================
 Species                            Species TaxID Species sequences Species sequences (stringent) Genus      Genus sequences Genus sequences (stringent)
 ---------------------------------- ------------- ----------------- ----------------------------- ---------- --------------- ---------------------------
-Cassava brown streak virus                137758                45                            45 Ipomovirus
-Ugandan cassava brown streak virus        946046                28                            28 Ipomovirus
-Tobacco etch virus                         12227                21                            19 Potyvirus
+Cassava brown streak virus                137758                45                            45 Ipomovirus               0                           0
+Ugandan cassava brown streak virus        946046                28                            28 Ipomovirus               0                           0
+Tobacco etch virus                         12227                21                            19 Potyvirus                0                           0
 ================================== ============= ================= ============================= ========== =============== ===========================
 
-This is the command line tool's help::
+The command line tool offers additional options not currently exposed
+in Galaxy, including::
 
-    usage: kodoja_search.py [-h] [--version] -o OUTPUT_DIR -d1 KRAKEN_DB -d2
-    KAIJU_DB -r1 READ1 [-r2 READ2] [-f DATA_FORMAT]
-    [-t THREADS] [-s] [-m TRIM_MINLEN] [-a TRIM_ADAPT]
-    [-q KRAKEN_QUICK] [-p] [-c KAIJU_SCORE]
-    [-l KAIJU_MINLEN] [-i KAIJU_MISMATCH]
-
-    Kodoja
-
-    optional arguments:
-      -h, --help            show this help message and exit
-      --version             show program's version number and exit
-      -o OUTPUT_DIR, --output_dir OUTPUT_DIR
-                            Output directory path, required
-      -d1 KRAKEN_DB, --kraken_db KRAKEN_DB
-                            Kraken database path, required
-      -d2 KAIJU_DB, --kaiju_db KAIJU_DB
-                            Kaiju database path, required
-      -r1 READ1, --read1 READ1
-                            Read 1 file path, required
-      -r2 READ2, --read2 READ2
-                            Read 2 file path
-      -f DATA_FORMAT, --data_format DATA_FORMAT
-                            Sequence data format
-      -t THREADS, --threads THREADS
                             Number of threads
       -s, --host_subset     Subset host sequences before Kaiju
       -m TRIM_MINLEN, --trim_minlen TRIM_MINLEN
@@ -165,6 +145,9 @@ This is the command line tool's help::
       -i KAIJU_MISMATCH, --kaiju_mismatch KAIJU_MISMATCH
                             Kaju allowed mismatches
 
+
+For more information, please see the Kodoja manual
+https://github.com/abaizan/kodoja/wiki/Kodoja-Manual
     ]]></help>
     <citations>
         <citation type="bibtex">
