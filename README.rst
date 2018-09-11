@@ -60,7 +60,8 @@ Each installed version of Kodoja (or Kraken or Kaiju) will have its own
     $ find /path/to/galaxy/tool-data -name kaiju_databases.loc
     $ find /path/to/galaxy/tool-data -name kraken_databases.loc
 
-Edit a ``kraken_databases.loc`` file to add a line like this::
+Edit a ``kraken_databases.loc`` file to add a line like this, where
+``(tab)`` represents inserting a tab character (NOT spaces)::
 
     kodojaDB_v1.0_kraken(tab)KodojaDB v1.0 (kraken), Sept 2018(tab)/mnt/shared/data/kodojaDB_v1.0/krakenDB
 
