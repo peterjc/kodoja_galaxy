@@ -54,17 +54,28 @@ database provided with Kodoja::
     $ wget https://zenodo.org/record/1406071/files/kodojaDB_v1.0.tar.gz
     $ tar -zxvf kodojaDB_v1.0.tar.gz
 
-Then update your Galaxy configuration in ``tool-data/kraken_databases.loc``
-to add a line like this::
+Each installed version of Kodoja (or Kraken or Kaiju) will have its own
+``*.loc`` files, which Galaxy will merge into a single list. e.g.::
+
+    $ find /path/to/galaxy/tool-data -name kaiju_databases.loc
+    $ find /path/to/galaxy/tool-data -name kraken_databases.loc
+
+Edit a ``kraken_databases.loc`` file to add a line like this::
 
     kodojaDB_v1.0_kraken(tab)KodojaDB v1.0 (kraken), Sept 2018(tab)/mnt/shared/data/kodojaDB_v1.0/krakenDB
 
-And likewise update ``tool-data/kaiju_databases.loc`` with a line like::
+And likewise update ``kaiju_databases.loc`` with a line like::
 
     kodojaDB_v1.0_kaiju(tab)KodojaDB v1.0 (kaiju), Sept 2018(tab)/mnt/shared/data/kodojaDB_v1.0/kaijuDB
 
 At the time of writing, reloading the ``*.loc`` files required restarting
-the Galaxy server.
+the Galaxy server, or doing this explicitly via the "Data tables registry"
+available under Server Administration if logged into Galaxy as an administator.
+
+It is our personal preference to work with ``tool-data/kraken_databases.loc``
+and ``tool-data/kaiju_databases.loc``, but if these are being ignored, you
+*may* need to enable this by adding the XML data table entries from our file
+``tool_data_table_conf.xml.sample`` to ``config/tool_data_table_conf.xml``.
 
 
 History
