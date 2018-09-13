@@ -1,7 +1,7 @@
 <tool id="kodoja_search" name="Kodoja database search" version="0.0.8">
     <description>identify viruses from plant RNA sequencing data</description>
     <requirements>
-        <requirement type="package" version="0.0.8">kodoja</requirement>
+        <requirement type="package" version="0.0.7">kodoja</requirement>
     </requirements>
     <version_command>kodoja_search.py --version</version_command>
     <command detect_errors="exit_code"><![CDATA[
@@ -40,6 +40,10 @@ kodoja_search.py
 -o .
 &&
 mv ./virus_table.txt '$combined_table'
+#if $capture_reads_table:
+&&
+mv ./kodoja_VRL.txt '$reads_table'
+#end if
 ]]></command>
     <inputs>
         <param label="Select a Kraken database" name="kraken_db" type="select">
@@ -68,9 +72,13 @@ mv ./virus_table.txt '$combined_table'
                 <param format="fasta,fastq" label="Input sequences" name="input_sequences" type="data" help="FASTA or FASTQ datasets"/>
             </when>
         </conditional>
+        <param name="capture_reads_table" type="boolean" value="false" label="Capture read assignment table" help="This table can be used to filter out reads matched to (individual) viruses"/>
     </inputs>
     <outputs>
         <data name="combined_table" format="tabular" label="Kodoja species report for ${on_string}" />
+        <data name="reads_table" format="tabular" label="Kodoja read assignment for ${on_string}">
+            <filter>capture_reads_table</filter>
+        </data>
     </outputs>
     <tests>
         <test>
@@ -87,6 +95,16 @@ mv ./virus_table.txt '$combined_table'
             <param name="forward_input" value="testData_1.fastq" ftype="fastq" />
             <param name="reverse_input" value="testData_2.fastq" ftype="fastq" />
             <output name="combined_table" file="virus_table_PE_fastq.tabular" ftype="tabular" />
+        </test>
+        <test>
+            <param name="kraken_db" value="kraken3viruses" />
+            <param name="kaiju_db" value="kaiju3viruses" />
+            <param name="single_paired_selector" value="yes" />
+            <param name="forward_input" value="testData_1.fastq" ftype="fastq" />
+            <param name="reverse_input" value="testData_2.fastq" ftype="fastq" />
+            <param name="capture_reads_table" value="true" />
+            <output name="combined_table" file="virus_table_PE_fastq.tabular" ftype="tabular" />
+            <output name="reads_table" file="read_table_PE_fastq.tabular" ftype="tabular" />
         </test>
         <test>
             <param name="kraken_db" value="kraken3viruses" />
@@ -126,8 +144,19 @@ Ugandan cassava brown streak virus        946046                28              
 Tobacco etch virus                         12227                21                            19 Potyvirus                0                           0
 ================================== ============= ================= ============================= ========== =============== ===========================
 
-The command line tool offers additional options not currently exposed
-in Galaxy, including::
+The second most important output, which you can optionally capture
+for use within Galaxy, is a per-read table summarising matches found
+with Kraken and/or Kaiju. The Kodoja Retrieve tool is not currently
+available within Galaxy, but you can instead use this file directly
+within Galaxy to filter out just the virus reads, or even reads
+matched to a specific taxid. See for example ``seq_filter_by_id``
+which is available via the Galaxy Tool Shed:
+
+http://toolshed.g2.bx.psu.edu/view/peterjc/seq_filter_by_id
+https://github.com/peterjc/pico_galaxy/tree/master/tools/seq_filter_by_id
+
+The Kodoja Search command line tool offers additional options not
+currently exposed in Galaxy, including::
 
                             Number of threads
       -s, --host_subset     Subset host sequences before Kaiju
@@ -144,7 +173,6 @@ in Galaxy, including::
                             Kaju minimum length
       -i KAIJU_MISMATCH, --kaiju_mismatch KAIJU_MISMATCH
                             Kaju allowed mismatches
-
 
 For more information, please see the Kodoja manual
 https://github.com/abaizan/kodoja/wiki/Kodoja-Manual
