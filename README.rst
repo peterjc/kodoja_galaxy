@@ -94,6 +94,7 @@ v0.0.7  - Minor update to call ``kodoja_search.py`` v0.0.6.
         - Support ``$GALAXY_SLOTS``, defaulting to using four threads.
 v0.0.8  - Minor update to call ``kodoja_search.py`` v0.0.8.
         - Option to capture the ``kodoja_VRL.tsv`` read table.
+        - Accept ``kraken_databases.loc`` entry style for old Kraken wrapper.
 ======= ======================================================================
 
 

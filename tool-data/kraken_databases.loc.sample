@@ -1,6 +1,7 @@
 # This is a tab-separated file listing any Kraken databases
 # installed locally to offer via Galaxy.
 #
+# Expect three columns, tab separated, as follows:
 # - Column 1 - value, the key which Galaxy will record in DB
 # - Column 2 - name, the text caption which Galaxy show users
 # - Column 3 - path, the directory name (which will contain
@@ -12,3 +13,12 @@
 # kodoja at https://doi.org/10.5281/zenodo.1406071
 #
 # kodojaDB_v1.0_kraken(tab)KodojaDB v1.0 (kraken), Sept 2018(tab)/mnt/shared/data/kodojaDB_v1.0/krakenDB
+#
+# Also, for backward compatibility with early versions of the
+# Galaxy wrapper for Kraken, the Kodoja wrapper will also
+# accept three columns as follows:
+# - Column 1 - value, the key which Galaxy will record in DB
+# - Column 2 - name, final part of folder name, which Galaxy
+#   will show the user in the drop down lists to choose from
+# - Column 3 - path, parent folder name where $value/$name
+#   is the folder containing ``database.idx`` etc.
